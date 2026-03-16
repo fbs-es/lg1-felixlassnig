@@ -5,8 +5,6 @@ import java.util.Scanner;
 public class HumanVsComputer {
 
     public void StartGame() {
-        GenRandom randomGen = new GenRandom();
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Mensch vs Computer");
         System.out.println("Zahlenbereich 1 - 100");
@@ -30,7 +28,7 @@ public class HumanVsComputer {
                 break;
             }
 
-            int tipp = randomGen.generierenRandom(untergrenze, obergrenze);
+            int tipp = GenRandom.generierenRandom(untergrenze, obergrenze);
 
             System.out.println("\nVersuch " + count + ": Ist die Zahl: " + tipp);
 
