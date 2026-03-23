@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import fbs.lg1.pruefen.EvaluatePaket;
+
 class AUFGABE08Test {
 
     @ParameterizedTest
@@ -17,7 +19,7 @@ class AUFGABE08Test {
             "20.0, true, false, true, Paket angenommen mit Hinweis zerbrechlich" })
     void testEvaluatePaket(double gewicht, boolean masseOk, boolean hatGefahrstoffe, boolean istZerbrechlich,
             String erwartet) {
-        AUFGABE08 aufgabe = new AUFGABE08();
+        EvaluatePaket aufgabe = new EvaluatePaket();
         String actual = aufgabe.evaluatePaket(gewicht, masseOk, hatGefahrstoffe, istZerbrechlich);
         assertEquals(erwartet, actual);
     }
