@@ -4,7 +4,7 @@ public class KinoVerwaltung {
 
     private static final int REIHEN = 13;
     private static final int PLAETZE = 9;
-    public char[][] kinosaal;
+    private char[][] kinosaal;
 
     public KinoVerwaltung() {
         this(REIHEN, PLAETZE);
@@ -15,7 +15,7 @@ public class KinoVerwaltung {
         init();
     }
 
-    public void init() {
+    private void init() {
         for (int i = 0; i < kinosaal.length; i++) {
 
             for (int j = 0; j < kinosaal[i].length; j++) {
@@ -29,12 +29,20 @@ public class KinoVerwaltung {
         }
     }
 
-    public void start() {
+    public void printKinosaal() {
         for (int i = 0; i < kinosaal.length; i++) {
             for (int j = 0; j < kinosaal[i].length; j++) {
                 System.out.print(kinosaal[i][j] + " ");
             }
             System.out.println();
         }
+    }
+
+    public void start() {
+        printKinosaal();
+    }
+
+    public char[][] getKinosaal() {
+        return this.kinosaal;
     }
 }
