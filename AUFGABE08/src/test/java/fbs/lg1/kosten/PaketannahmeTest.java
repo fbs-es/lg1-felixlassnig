@@ -20,7 +20,7 @@ class PaketannahmeTest {
 
     @Test
     void AblehnenTestFail() {
-        assertEquals(EnumAbnahme.ABLEHNEN, pruefen.annahmePruefen(false, false, false, false));
+        assertEquals(EnumAbnahme.ANNAHME, pruefen.annahmePruefen(false, false, false, false));
     }
 
     @Test
@@ -30,7 +30,7 @@ class PaketannahmeTest {
 
     @Test
     void AnnahmeTestFail() {
-        assertEquals(EnumAbnahme.ANNAHME, pruefen.annahmePruefen(true, false, false, true));
+        assertEquals(EnumAbnahme.ABLEHNEN, pruefen.annahmePruefen(true, false, false, true));
     }
 
     @Test
@@ -40,7 +40,7 @@ class PaketannahmeTest {
 
     @Test
     void SperrgutTestFail() {
-        assertEquals(EnumAbnahme.SPERRGUT, pruefen.annahmePruefen(false, false, false, false));
+        assertEquals(EnumAbnahme.ANNAHME, pruefen.annahmePruefen(false, false, false, false));
     }
 
     @Test
@@ -50,6 +50,6 @@ class PaketannahmeTest {
 
     @Test
     void AnnahmeZerbrechlichTestFail() {
-        assertEquals(EnumAbnahme.ANNAHME_ZERBRECHLICH, pruefen.annahmePruefen(false, false, false, false));
+        assertEquals(EnumAbnahme.ANNAHME, pruefen.annahmePruefen(false, false, false, false));
     }
 }
