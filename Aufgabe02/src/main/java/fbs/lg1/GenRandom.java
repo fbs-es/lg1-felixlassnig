@@ -13,7 +13,6 @@ public class GenRandom {
 
     // Das ist die neue, verbesserte Methode für den Bereich [min, max]
     public static int generierenRandom(int untergrenze, int obergrenze) {
-        // Formel: Spanne berechnen (+1 für inklusive) und Startwert addieren
         return random.nextInt(obergrenze - untergrenze + 1) + untergrenze;
     }
 }
