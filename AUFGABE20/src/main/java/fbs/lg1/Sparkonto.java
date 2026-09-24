@@ -81,14 +81,6 @@ public class Sparkonto {
         }
     }
 
-    /**
-     * Überweist einen Betrag von diesem Konto auf ein Zielkonto.
-     * Kann nur durchgeführt werden, wenn das Zielkonto existiert und das Hauptkonto über ausreichend Guthaben verfügt.
-     *
-     * @param zielKonto Das Empfängerkonto
-     * @param betrag Der zu überweisende Betrag
-     * @return true wenn die Überweisung erfolgreich war, andernfalls false
-     */
     public boolean transferAmount(Sparkonto zielKonto, BigDecimal betrag) {
         if (zielKonto == null) {
             System.out.println("Transfer fehlgeschlagen: Zielkonto existiert nicht.");
