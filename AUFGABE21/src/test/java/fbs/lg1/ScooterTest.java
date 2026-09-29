@@ -22,14 +22,14 @@ class ScooterTest {
         assertThrows(IllegalArgumentException.class, () -> new Kunde(1, "Anna", "anna@test.de", 9.99));
 
         // Ab 10€ -> erfolgreich
-        Kunde kunde = new Kunde(1, "Anna", "anna@test.de", 10.00);
+        Kunde kunde = new Kunde(1, "Anna", "anna@test.at", 10.00);
         assertEquals(10.00, kunde.getBalance());
         assertFalse(kunde.isAccountLocked());
     }
 
     @Test
     void testRollerAusleihenErfolgreich() {
-        Kunde kunde = new Kunde(1, "Max", "max@test.de", 15.0);
+        Kunde kunde = new Kunde(1, "Felix", "felix@test.at", 15.0);
         Scooter scooter = new Scooter("SC-001");
 
         boolean erfolg = kunde.rollerAusleihen(scooter);
@@ -41,7 +41,7 @@ class ScooterTest {
 
     @Test
     void testRollerAusleihenAkkuZuSchwach() {
-        Kunde kunde = new Kunde(1, "Max", "max@test.de", 15.0);
+        Kunde kunde = new Kunde(1, "Felix", "felix@test.at", 15.0);
         Scooter scooter = new Scooter("SC-001", 15, true); // Akku <= 15% darf nicht ausgeliehen werden
 
         boolean erfolg = kunde.rollerAusleihen(scooter);
@@ -52,7 +52,7 @@ class ScooterTest {
 
     @Test
     void testFahrtBeenden() {
-        Kunde kunde = new Kunde(1, "Max", "max@test.de", 15.0);
+        Kunde kunde = new Kunde(1, "Felix", "felix@test.at", 15.0);
         Scooter scooter = new Scooter("SC-001");
         kunde.rollerAusleihen(scooter);
 
@@ -67,7 +67,7 @@ class ScooterTest {
 
     @Test
     void testKontoAusgleichen() {
-        Kunde kunde = new Kunde(1, "Max", "max@test.de", 10.0);
+        Kunde kunde = new Kunde(1, "Felix", "felix@test.at", 10.0);
         kunde.kontoAusgleichen(15.0);
         assertEquals(25.0, kunde.getBalance(), 0.01);
     }
