@@ -1,5 +1,11 @@
 package fbs.lg1;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Kunde {
 
     // 1. ATTRIBUTE von Kunden
@@ -11,6 +17,8 @@ public class Kunde {
     private boolean accountLocked;
     private int mahnungsStufe;
     private Scooter rentedScooter;
+    private LocalDateTime fahrtStartZeit; // Wann die aktuelle Fahrt gestartet wurde
+    private final List<Fahrt> fahrtHistorie = new ArrayList<>(); // Liste aller beendeten Fahrten
 
     // 2. KONSTRUKTOREN (Kunde erstellen)
 
@@ -27,6 +35,7 @@ public class Kunde {
         this.accountLocked = false;
         this.mahnungsStufe = 0;
         this.rentedScooter = null;
+        this.fahrtStartZeit = null;
     }
 
     // Konstruktor zum Laden eines bestehenden Kunden mit allen Daten
@@ -38,10 +47,16 @@ public class Kunde {
         this.accountLocked = accountLocked;
         this.mahnungsStufe = mahnungsStufe;
         this.rentedScooter = null;
+        this.fahrtStartZeit = null;
     }
 
     // Schritt 1: Roller ausleihen
     public boolean rollerAusleihen(Scooter scooter) {
+        return rollerAusleihen(scooter, LocalDateTime.now());
+    }
+
+    // Ausleihen mit fester Startzeit
+    public boolean rollerAusleihen(Scooter scooter, LocalDateTime startZeit) {
         if (scooter == null) {
             return false;
         }
@@ -66,29 +81,49 @@ public class Kunde {
             return false;
         }
 
-        // Ausleihe erfolgreich: Roller zuweisen und entsperren
+        // Roller zuweisen, Startzeit merken und entsperren
         this.rentedScooter = scooter;
+        this.fahrtStartZeit = (startZeit != null) ? startZeit : LocalDateTime.now();
         scooter.entsperren();
         return true;
     }
 
-    // Schritt 2: Fahrt beenden (Kosten abziehen, Akku senken, Roller sperren)
-    public boolean fahrtBeenden(int minuten) {
-        // Fahrt muss mehr als 0 Minuten dauern und ein Roller muss ausgeliehen sein
-        if (minuten <= 0 || this.rentedScooter == null) {
+    // Schritt 2: Fahrt jetzt beenden
+    public boolean fahrtBeenden() {
+        return fahrtBeenden(LocalDateTime.now());
+    }
+
+    // Fahrt mit Endzeit beenden
+    public boolean fahrtBeenden(LocalDateTime endZeit) {
+        // Prüfen ob überhaupt ein Roller ausgeliehen ist
+        if (this.rentedScooter == null || this.fahrtStartZeit == null || endZeit == null) {
+            return false;
+        }
+        if (endZeit.isBefore(this.fahrtStartZeit)) {
             return false;
         }
 
-        // Fahrtkosten berechnen
-        this.balance -= (minuten * 0.20);
+        // Dauer in Minuten ausrechnen
+        long minuten = Duration.between(this.fahrtStartZeit, endZeit).toMinutes();
+
+        // Fahrtkosten berechnen (0,20 € pro Minute)
+        double fahrtkosten = minuten * 0.20;
+        this.balance -= fahrtkosten;
 
         // Akku um 1% pro Minute senken
-        int neuerAkku = this.rentedScooter.getBattery() - minuten;
+        int neuerAkku = Math.max(0, this.rentedScooter.getBattery() - (int) minuten);
         this.rentedScooter.setBattery(neuerAkku);
 
-        // Roller wieder sperren und Ausleihe beenden
+        // Roller wieder sperren
         this.rentedScooter.sperren();
+
+        // Fahrt in die Historie speichern
+        Fahrt fahrt = new Fahrt(this.rentedScooter, this.fahrtStartZeit, endZeit, fahrtkosten);
+        this.fahrtHistorie.add(fahrt);
+
+        // Roller zurückgeben
         this.rentedScooter = null;
+        this.fahrtStartZeit = null;
 
         // Fällt das Guthaben unter 0 € wird der Kunde gesperrt und gemahnt
         if (this.balance < 0.0) {
@@ -98,6 +133,17 @@ public class Kunde {
         }
 
         return true;
+    }
+
+    // Alte Methode mit Minutenangabe
+    public boolean fahrtBeenden(int minuten) {
+        if (minuten <= 0 || this.rentedScooter == null) {
+            return false;
+        }
+        LocalDateTime start = (this.fahrtStartZeit != null) ? this.fahrtStartZeit
+                : LocalDateTime.now().minusMinutes(minuten);
+        this.fahrtStartZeit = start;
+        return fahrtBeenden(start.plusMinutes(minuten));
     }
 
     // Schritt 3: Automatische Mahnung senden
@@ -180,5 +226,13 @@ public class Kunde {
 
     public void setRentedScooter(Scooter rentedScooter) {
         this.rentedScooter = rentedScooter;
+    }
+
+    public LocalDateTime getFahrtStartZeit() {
+        return fahrtStartZeit;
+    }
+
+    public List<Fahrt> getFahrtHistorie() {
+        return Collections.unmodifiableList(fahrtHistorie);
     }
 }

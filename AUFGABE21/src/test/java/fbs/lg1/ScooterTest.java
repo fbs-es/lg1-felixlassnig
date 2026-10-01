@@ -71,4 +71,31 @@ class ScooterTest {
         kunde.kontoAusgleichen(15.0);
         assertEquals(25.0, kunde.getBalance(), 0.01);
     }
+
+    @Test
+    void testFahrtMitEchtenZeitstempelnUndHistorie() {
+        Kunde kunde = new Kunde(2, "Lisa", "lisa@test.at", 20.0);
+        Scooter scooter = new Scooter("SC-002");
+
+        java.time.LocalDateTime start = java.time.LocalDateTime.of(2026, 9, 29, 14, 0, 0);
+        java.time.LocalDateTime ende = java.time.LocalDateTime.of(2026, 9, 29, 14, 15, 0);
+
+        assertTrue(kunde.rollerAusleihen(scooter, start));
+        assertFalse(scooter.isLocked());
+
+        // 15 Minuten Fahrt: 15 * 0.20€ = 3.00€ Kosten
+        assertTrue(kunde.fahrtBeenden(ende));
+        assertTrue(scooter.isLocked());
+        assertEquals(17.0, kunde.getBalance(), 0.01);
+        assertEquals(85, scooter.getBattery());
+
+        // Historie überprüfen
+        assertEquals(1, kunde.getFahrtHistorie().size());
+        Fahrt fahrt = kunde.getFahrtHistorie().get(0);
+        assertEquals(scooter, fahrt.getScooter());
+        assertEquals(start, fahrt.getStartZeit());
+        assertEquals(ende, fahrt.getEndZeit());
+        assertEquals(15, fahrt.getDauerInMinuten());
+        assertEquals(3.00, fahrt.getKosten(), 0.01);
+    }
 }
