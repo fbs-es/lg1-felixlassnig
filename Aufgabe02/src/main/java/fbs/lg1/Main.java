@@ -6,6 +6,6 @@ public class Main {
         // ZahlenRaten aufgabe = new ZahlenRaten();
         HumanVsComputer aufgabe01 = new HumanVsComputer();
         // aufgabe.spielStarten();
-        aufgabe01.StartGame();
+        aufgabe01.startGame();
     }
 }
