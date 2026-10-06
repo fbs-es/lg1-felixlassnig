@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Startklasse für Aufgabe 22.
  * Zeigt beispielhaft, wie Hersteller, Produkt, Kunde, Bewertung und Antwort
  * zusammenarbeiten.
  */
@@ -12,14 +11,14 @@ public class Main {
 
     public static void main(String[] args) {
         // 1. Hersteller anlegen
-        Hersteller hersteller = new Hersteller("TechCorp", "support@techcorp.de");
+        Hersteller hersteller = new Hersteller("Mediamarkt", "support@mediamarkt.at");
 
         // 2. Produkt mit diesem Hersteller anlegen (Preis als BigDecimal)
         Produkt laptop = new Produkt("P-001", "Laptop", new BigDecimal("999.99"), hersteller);
 
         // 3. Zwei Kunden anlegen
-        Kunde manfred = new Kunde("K-001", "Manfred");
-        Kunde udo = new Kunde("K-002", "Udo");
+        Kunde manfred = new Kunde("K-001", "Felix");
+        Kunde udo = new Kunde("K-002", "Alex");
 
         // 4. Bewertungen erstellen
         // Hinweis: Der Konstruktor von Bewertung meldet sich selbst beim Produkt an
