@@ -7,7 +7,7 @@ public class Buch {
     private String autor;
     private boolean verfuegbar;
 
-    // Konstruktor
+    // Konstruktor von Buch
     public Buch(String isbn, String title, String autor) {
         this.isbn = isbn;
         this.title = title;
@@ -20,18 +20,22 @@ public class Buch {
         return isbn;
     }
 
+    // Hier wird der Title geholt
     public String getTitle() {
         return title;
     }
 
+    // Hier wird der Auto aufgerufen
     public String getAutor() {
         return autor;
     }
 
+    // Hier wird geprüft ob das Buch verfügbar ist
     public boolean isVerfuegbar() {
         return verfuegbar;
     }
 
+    // Hier wird das Buch auf Verfügbar gesetzt
     public void setVerfuegbar(boolean verfuegbar) {
         this.verfuegbar = verfuegbar;
     }

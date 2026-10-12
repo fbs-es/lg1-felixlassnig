@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Ausleihe {
+    // Attribute
     private Buch buch;
     private Nutzer nutzer;
     private LocalDate ausleihdatum;
@@ -12,7 +13,7 @@ public class Ausleihe {
     private double verspaetungsStrafe;
     private LocalDate geplantesRueckgabedatum;
 
-    // Konstruktor
+    // Konstruktor von Ausleihe
     public Ausleihe(Buch buch, Nutzer nutzer, LocalDate ausleihdatum) {
         this.buch = buch;
         this.nutzer = nutzer;
@@ -25,30 +26,37 @@ public class Ausleihe {
 
     // Getter
 
+    // Hier wird das Buch geholt
     public Buch getBuch() {
         return buch;
     }
 
+    // Hier wird der Nutzer geholt
     public Nutzer getNutzer() {
         return nutzer;
     }
 
+    // Hier wird das Ausleihdatum geholt
     public LocalDate getAusleihdatum() {
         return ausleihdatum;
     }
 
+    // Hier wird das geplante Rückgabedatum geholt
     public LocalDate getGeplantesRueckgabedatum() {
         return geplantesRueckgabedatum;
     }
 
+    // Hier wird der AusleihStatus geholt
     public Ausleihstatus getStatus() {
         return status;
     }
 
+    // Hier wird geprüft ob es Verlängert wurde oder nicht
     public boolean isVerlaengert() {
         return verlaengert;
     }
 
+    // Hier wird die Verspätungstrafe geholt
     public double getVerspaetungsStrafe() {
         return verspaetungsStrafe;
     }
@@ -68,12 +76,14 @@ public class Ausleihe {
 
     }
 
+    // Hier wird überprüft ob die Rückgabe überzogen wurde oder nicht
     public void pruefeUeberzogen(LocalDate aktuellesDatum) {
         if (this.status == Ausleihstatus.AKTIV && aktuellesDatum.isAfter(this.geplantesRueckgabedatum)) {
             this.status = Ausleihstatus.UEBERZOGEN;
         }
     }
 
+    // Rückgabe funktion
     public void rueckgabe(LocalDate rueckgabedatum) {
         if (rueckgabedatum.isAfter(this.geplantesRueckgabedatum)) {
             long tage = ChronoUnit.DAYS.between(this.geplantesRueckgabedatum, rueckgabedatum);
