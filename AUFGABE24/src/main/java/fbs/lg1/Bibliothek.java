@@ -12,7 +12,7 @@ public class Bibliothek {
     private List<Nutzer> nutzer;
     private List<Ausleihe> ausleihen;
 
-    // Konstruktor
+    // Konstruktor von Bibliothek
     public Bibliothek(String name, String adresse) {
         this.name = name;
         this.adresse = adresse;
@@ -22,37 +22,44 @@ public class Bibliothek {
     }
 
     // Getter
-
+    // Hier wird der Name geholt
     public String getName() {
         return name;
     }
 
+    // Hier wird die Adresse geholt
     public String getAdresse() {
         return adresse;
     }
 
+    // Hier wird die Liste von Büchern geholt
     public List<Buch> getBuecher() {
         return buecher;
     }
 
+    // Hier wird die Liste von Ausgeliehenen Büchern geholt
     public List<Ausleihe> getAusleihen() {
         return ausleihen;
     }
 
+    // Hier wird die Liste von Nutzern geholt
     public List<Nutzer> getNutzer() {
         return nutzer;
     }
 
     // Methoden
 
+    // Hier werden neue Bücher hinzugefügt
     public void neuesBuchHinzufuegen(Buch buch) {
         this.buecher.add(buch);
     }
 
+    // Hier werden Nutzer registriert
     public void nutzerRegistrieren(Nutzer nutzer) {
         this.nutzer.add(nutzer);
     }
 
+    // Hier wird die Funktion zum Buch ausleihen erstellt
     public Ausleihe buchAusleihen(Buch buch, Nutzer nutzer, LocalDate ausleihdatum) {
         if (!buch.isVerfuegbar()) {
             return null;
